@@ -10,11 +10,11 @@ services:
     - "127.0.0.1:5001:5044"
 
   filebeat:
-    image: docker.elastic.co/beats/filebeat:5.5.2
+    build:
+      context: ./filebeat
     depends_on: [logstash]
     environment:
     - "LOGSTASH_HOST=logstash:5044"
     volumes:
-    - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
     - ./volumes/filebeat:/usr/share/filebeat/data/
     - ./filebeat/hostfs:/hostfs/:ro
