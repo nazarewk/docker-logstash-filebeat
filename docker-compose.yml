@@ -12,9 +12,8 @@ services:
   filebeat:
     image: docker.elastic.co/beats/filebeat:5.5.2
     depends_on: [logstash]
-    network_mode: host
     environment:
-    - "LOGSTASH_HOST=127.0.0.1:5001"
+    - "LOGSTASH_HOST=logstash:5044"
     volumes:
     - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
     - ./volumes/filebeat:/usr/share/filebeat/data/
