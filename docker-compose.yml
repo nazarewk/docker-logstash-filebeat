@@ -1,0 +1,20 @@
+version: '2.3'
+services:
+  logstash:
+    image: docker.elastic.co/logstash/logstash:5.5.2
+    volumes:
+    - ./logstash/logstash.yml:/usr/share/logstash/config/logstash.yml
+    - ./logstash/pipeline/:/usr/share/logstash/pipeline/
+    - ./volumes/logstash:/usr/share/logstash/data
+    ports:
+    - "127.0.0.1:5001:5044"
+
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:5.5.2
+    network_mode: host
+    environment:
+    - "LOGSTASH_HOST=127.0.0.1:5001"
+    volumes:
+    - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+    - ./volumes/filebeat:/usr/share/filebeat/data/
+    - ./filebeat/hostfs:/hostfs/:ro

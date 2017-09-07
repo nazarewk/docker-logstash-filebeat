@@ -1,0 +1,7 @@
+filebeat.prospectors:
+- paths:
+  - /hostfs/queue.log
+  json.keys_under_root: true
+
+output.logstash:
+  hosts: ["${LOGSTASH_HOST}"]
